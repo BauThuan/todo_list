@@ -35,9 +35,7 @@ export type CurrentPage = {
 }
 export type SelectOption = {
   type: typeof SET_SELECT_OPTION,
-  payload: number,
+  payload: boolean,
 }
-
-
 
 export type ActionTypes = FetchDataRequestAction | FetchDataSuccessAction | FetchDataFailureAction | CurrentPage | SelectOption;
