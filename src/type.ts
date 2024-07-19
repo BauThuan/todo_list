@@ -74,10 +74,10 @@ export type ActionTypes =
       ;
 export type  INITIAL_STATE = {
   data?: any,
-  currentPage: number ,
-  status?: boolean,
+  currentPage: number,
+  status?: boolean | null,
   statusModal?: boolean,
-  dataModal?: BookType,
-  featureModal?: string,
+  dataModal?: BookType | null,
+  featureModal?: string | null,
   reRenderScreen?: boolean
 }

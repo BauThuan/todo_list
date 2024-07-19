@@ -5,7 +5,7 @@ export const setNewCurrentPage = (page: number) => ({
     type: INFOR_ACTION_STORE.SET_CURRENT_PAGE,
     payload: page,
   });
-export const setSelectedValue = (status: boolean | null) => ({
+export const setSelectedValue = (status: boolean) => ({
     type: INFOR_ACTION_STORE.SET_SELECT_OPTION,
     payload: status,
   });

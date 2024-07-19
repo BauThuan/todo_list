@@ -1,6 +1,6 @@
-import { ActionTypes } from "../type";
+import { ActionTypes, INITIAL_STATE } from "../type";
 import { INFOR_ACTION_STORE } from "../constants";
-const initialState = {
+const initialState: INITIAL_STATE = {
     data: null,
     currentPage: 1,
     status: null,
