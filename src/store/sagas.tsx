@@ -2,15 +2,16 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* fetchDataSaga() {
+function* fetchDataSaga(): Generator<any, void, any> {
   try {
+    // eslint-disable-next-line
     const response = yield call(axios.get, 'https://654b8b5b5b38a59f28ef4924.mockapi.io/api/books');
     yield put({ type: 'FETCH_DATA_SUCCESS', payload: response.data });
   } catch (error) {
     yield put({ type: 'FETCH_DATA_FAILURE', error});
   }
 }
-function* deleteBookSaga(action: any) {
+function* deleteBookSaga(action: any): Generator<any, void, any> {
   try {
     const response = yield call(axios.delete, `https://654b8b5b5b38a59f28ef4924.mockapi.io/api/books/${action.payload.id}`);
     yield put({ type: 'DELETE_DATA_SUCCESS', payload: response.data });
@@ -18,7 +19,7 @@ function* deleteBookSaga(action: any) {
     yield put({ type: 'DELETE_DATA_FAILURE', error });
   }
 }
-function* addBookSaga(action: any) {
+function* addBookSaga(action: any): Generator<any, void, any> {
   try {
     const response = yield call(axios.post, 'https://654b8b5b5b38a59f28ef4924.mockapi.io/api/books', action.payload);
     yield put({ type: 'ADD_DATA_SUCCESS', payload: response.data });
@@ -26,7 +27,7 @@ function* addBookSaga(action: any) {
     yield put({ type: 'ADD_DATA_FAILURE', error });
   }
 }
-function* updateBookSaga(action : any) {
+function* updateBookSaga(action : any): Generator<any, void, any> {
   try {
     const response = yield call(axios.put, `https://654b8b5b5b38a59f28ef4924.mockapi.io/api/books/${action.payload.id}`, action.payload);
     yield put({ type: 'UPDATE_DATA_SUCCESS', payload: response.data });

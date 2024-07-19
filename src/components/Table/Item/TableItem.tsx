@@ -12,7 +12,7 @@ export const TableItem = () => {
     const data = useSelector((state: BookType) => state.data);
     const currentPage = useSelector((state: INITIAL_STATE) => state.currentPage);
     const status = useSelector((state: INITIAL_STATE) => state.status);
-    const [value, setValue] = useState<string | null>('');
+    const [setValue] = useState<string | null>('');
     const notifyStatus = useNotification();
 
 

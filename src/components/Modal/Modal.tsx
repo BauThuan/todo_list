@@ -1,4 +1,3 @@
-import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button, TextInput,Group, Box, Text } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
@@ -7,13 +6,12 @@ import { useNotification } from '../../hooks/use-notification';
 import { BTN_TITLE } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { INITIAL_STATE } from '../../type';
-import { setStatusModal } from '../../store/action';
+import { setFeatureModal, setStatusModal } from '../../store/action';
 import { useMemo } from 'react';
 export const ModalAddNewData = () => {
   const statusModal = useSelector((state: INITIAL_STATE) => state.statusModal);
   const dataModal = useSelector((state: INITIAL_STATE) => state.dataModal);
   const featureModal = useSelector((state: INITIAL_STATE) => state.featureModal);
-  const [opened] = useDisclosure(statusModal);
   const notifyStatus = useNotification();
   const dispatch = useDispatch();
 
@@ -43,14 +41,23 @@ export const ModalAddNewData = () => {
     },
   });
 
-  const titleBtn = useMemo(() => {
+  const Btn = useMemo(() => {
     if(featureModal ==='edit'){
-      return 'Sửa'
+      return {
+        titleBtn: "Sửa",
+        titleModal: "Sửa thông tin mượn sách"
+      }
     }
     if(featureModal ==='delete'){
-      return 'Xóa'
+      return {
+        titleBtn: "Xóa",
+        titleModal: "Xóa thông tin mượn sách"
+      }
     }
-      return 'Thêm'
+      return  {
+        titleBtn: "Thêm",
+        titleModal: "Thêm thông tin mượn sách"
+      }
   }, [featureModal])
 
   return (
@@ -61,7 +68,7 @@ export const ModalAddNewData = () => {
           dispatch(setStatusModal(false))
           return statusModal
         }} 
-        title={<Text fw={500}>Thêm thông tin mượn sách</Text>} 
+        title={<Text fw={500}>{Btn.titleModal}</Text>} 
         centered
       >
         <form onSubmit={form.onSubmit((values) => {
@@ -135,7 +142,7 @@ export const ModalAddNewData = () => {
             />
             <Group justify="flex-end" mt="md">
                 <Button fullWidth type="submit" onClick={() => {
-                }}>{titleBtn}</Button>
+                }}>{Btn.titleBtn}</Button>
             </Group>
         </form>
       </Modal>
@@ -145,6 +152,7 @@ export const ModalAddNewData = () => {
                 <SearchStatus/>
                 <Button ml={10} onClick={() => {
                   dispatch(setStatusModal(true))
+                  dispatch(setFeatureModal('add'))
                 }}>{BTN_TITLE.ADD_INFORMATION}</Button>
             </Box>
         </Box>
