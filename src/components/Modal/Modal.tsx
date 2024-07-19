@@ -4,11 +4,10 @@ import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { SearchStatus } from '../Search/SearchStatus';
 import { useNotification } from '../../hooks/use-notification';
-import { BTN_TITLE, INFOR_ACTION_STORE } from '../../constants';
+import { BTN_TITLE } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { INITIAL_STATE } from '../../type';
 import { setStatusModal } from '../../store/action';
-import { useState } from 'react';
 export const ModalAddNewData = () => {
   const statusModal = useSelector((state: INITIAL_STATE) => state.statusModal);
   const dataModal = useSelector((state: INITIAL_STATE) => state.dataModal);
