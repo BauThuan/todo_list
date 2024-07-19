@@ -75,7 +75,7 @@ export type ActionTypes =
 export type  INITIAL_STATE = {
   data?: any,
   currentPage: number,
-  status?: boolean | null,
+  status?: boolean | any,
   statusModal?: boolean,
   dataModal?: BookType | null,
   featureModal?: string | null,

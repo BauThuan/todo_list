@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 export const SearchStatus = () => {
   const [value, setValue] = useState<string | null>(STATUS_BRROW_BOOK.ALL);
   const dispatch = useDispatch();
-  const mapStatusToBoolean = (status: string | null): boolean | null => {
+  const mapStatusToBoolean = (status: string | null): boolean => {
     switch (status) {
       case STATUS_BRROW_BOOK.PAID:
         return true;
@@ -15,7 +15,7 @@ export const SearchStatus = () => {
         return false;
       case STATUS_BRROW_BOOK.ALL:
       default:
-        return null;
+        return true;
     }
   };
   useEffect(() => {
