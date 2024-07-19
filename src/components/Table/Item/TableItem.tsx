@@ -31,6 +31,15 @@ export const TableItem = () => {
         dispatch(setDataModal(element))
         dispatch(setFeatureModal(title))
     };
+    const formatDate = (date: string | Date | undefined): string => {
+        if (!date) return 'not format date !';
+        const dateObj = typeof date === 'string' ? new Date(date) : date;
+        if (!(dateObj instanceof Date) || isNaN(dateObj.getTime())) {
+        return 'not format date !';
+        }
+        return dateObj.toLocaleDateString('vi-VN');
+    };
+  
     
     return (
         <>
@@ -41,8 +50,8 @@ export const TableItem = () => {
                             <Table.Td>{element?.id}</Table.Td>
                             <Table.Td>{element?.bookTitle}</Table.Td>
                             <Table.Td>{element?.borrower}</Table.Td>
-                            <Table.Td>{element?.borrowDate}</Table.Td>
-                            <Table.Td>{element?.returnDate}</Table.Td>
+                            <Table.Td>{formatDate(element?.borrowDate)}</Table.Td>
+                            <Table.Td>{formatDate(element?.returnDate)}</Table.Td>
                             <Table.Td>
                                 <Select
                                     checkIconPosition="right"
