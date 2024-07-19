@@ -13,7 +13,7 @@ export const setStatusModal = (status: boolean) => ({
   type: INFOR_ACTION_STORE.SET_STATUS_MODAL,
   payload: status
 })
-export const setDataModal = (data: BookType) => ({
+export const setDataModal = (data: BookType | null) => ({
   type: INFOR_ACTION_STORE.SET_DATA_MODAL,
   payload: data
 })

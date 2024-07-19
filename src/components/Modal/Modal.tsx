@@ -6,7 +6,7 @@ import { useNotification } from '../../hooks/use-notification';
 import { BTN_TITLE } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { INITIAL_STATE } from '../../type';
-import { setFeatureModal, setStatusModal } from '../../store/action';
+import { setDataModal, setFeatureModal, setStatusModal } from '../../store/action';
 import { useMemo } from 'react';
 export const ModalAddNewData = () => {
   const statusModal = useSelector((state: INITIAL_STATE) => state.statusModal);
@@ -16,7 +16,7 @@ export const ModalAddNewData = () => {
   const dispatch = useDispatch();
 
   const handleValidateString = (value: string, fields: string) => {
-    if(value.length === 0 && featureModal !== 'delete') {
+    if(value.length === 0 && !dataModal && featureModal !== 'delete') {
         return `Vui lòng điền đầy đủ tên ${fields}`
     }
     if(value.length !== 0 && value.length < 5 && featureModal !== 'delete') {
@@ -36,8 +36,8 @@ export const ModalAddNewData = () => {
     validate: {
       bookTitle: (value: string) => handleValidateString(value, 'sách'),
       borrower: (value: string) => handleValidateString(value, 'người mượn'),
-      borrowDate: (value: string) => (value.length !==0 || featureModal === 'delete' ? null : 'Vui lòng điền đầy đủ thông tin ngày mượn'),
-      returnDate: (value: string) => (value.length !==0 || featureModal === 'delete' ? null : 'Vui lòng điền đầy đủ thông tin ngày hoàn trả'),
+      borrowDate: (value: string) => ((value.length !==0 || dataModal?.borrowDate !== null) || featureModal === 'delete' ? null : 'Vui lòng điền đầy đủ thông tin ngày mượn'),
+      returnDate: (value: string) => ((value.length !==0 || dataModal?.returnDate !== null) || featureModal === 'delete' ? null : 'Vui lòng điền đầy đủ thông tin ngày hoàn trả'),
     },
   });
 
@@ -66,6 +66,7 @@ export const ModalAddNewData = () => {
         opened={statusModal ? statusModal : false } 
         onClose={() => {
           dispatch(setStatusModal(false))
+          dispatch(setDataModal(null))
           return statusModal
         }} 
         title={<Text fw={500}>{Btn.titleModal}</Text>} 
@@ -84,10 +85,10 @@ export const ModalAddNewData = () => {
           if(featureModal === 'edit'){
             dispatch({ type: 'UPDATE_DATA_REQUEST', payload: {
               id: dataModal?.id,
-              bookTitle: values.bookTitle,
-              borrower: values.borrower,
-              borrowDate: values.borrowDate,
-              returnDate: values.returnDate,
+              bookTitle: values.bookTitle || dataModal?.bookTitle,
+              borrower: values.borrower || dataModal?.borrower,
+              borrowDate: values.borrowDate || dataModal?.borrowDate,
+              returnDate: values.returnDate || dataModal?.returnDate,
             }});
             dispatch(setStatusModal(false))
             notifyStatus({ title: 'Thành công !', type: 'success' })
