@@ -1,16 +1,20 @@
 import { Table, Button, Group, Select, Text } from '@mantine/core';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BTN_TITLE, INFOR_ACTION_STORE, STATUS_BRROW_BOOK } from '../../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { TableSkeleton } from '../Loading/TableSkeleton';
 import { BookType, INITIAL_STATE } from '../../../type';
 import { setDataModal, setFeatureModal, setStatusModal } from '../../../store/action';
+import { useNotification } from '../../../hooks/use-notification';
 
 export const TableItem = () => {
     const dispatch = useDispatch();
     const data = useSelector((state: BookType) => state.data);
     const currentPage = useSelector((state: INITIAL_STATE) => state.currentPage);
     const status = useSelector((state: INITIAL_STATE) => state.status);
+    const [value, setValue] = useState<string | null>('');
+    const notifyStatus = useNotification();
+
 
     useEffect(() => {
         dispatch({ type: INFOR_ACTION_STORE.FETCH_DATA_REQUEST });
@@ -27,7 +31,7 @@ export const TableItem = () => {
         dispatch(setDataModal(element))
         dispatch(setFeatureModal(title))
     };
-
+    
     return (
         <>
             {data ? (
@@ -44,7 +48,19 @@ export const TableItem = () => {
                                     checkIconPosition="right"
                                     placeholder="Tìm kiếm theo trạng thái"
                                     data={[STATUS_BRROW_BOOK.PAID, STATUS_BRROW_BOOK.UN_PAID]}
-                                    defaultValue={STATUS_BRROW_BOOK.PAID}
+                                    defaultValue={element.status ? STATUS_BRROW_BOOK.PAID : STATUS_BRROW_BOOK.UN_PAID}
+                                    onChange={() => {
+                                        setValue
+                                        dispatch({ type: 'UPDATE_DATA_REQUEST', payload: {
+                                            id: element?.id,
+                                            status: !element.status 
+                                          }});
+                                          dispatch(setStatusModal(false))
+                                          notifyStatus({ title: 'Thành công !', type: 'success' })
+                                          setTimeout(() => {
+                                            location.reload();
+                                          }, 1000)
+                                    }}
                                 />
                             </Table.Td>
                             <Table.Td>

@@ -8,6 +8,7 @@ import { BTN_TITLE } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { INITIAL_STATE } from '../../type';
 import { setStatusModal } from '../../store/action';
+import { useMemo } from 'react';
 export const ModalAddNewData = () => {
   const statusModal = useSelector((state: INITIAL_STATE) => state.statusModal);
   const dataModal = useSelector((state: INITIAL_STATE) => state.dataModal);
@@ -42,6 +43,16 @@ export const ModalAddNewData = () => {
     },
   });
 
+  const titleBtn = useMemo(() => {
+    if(featureModal ==='edit'){
+      return 'Sửa'
+    }
+    if(featureModal ==='delete'){
+      return 'Xóa'
+    }
+      return 'Thêm'
+  }, [featureModal])
+
   return (
     <>
       <Modal
@@ -75,7 +86,7 @@ export const ModalAddNewData = () => {
             notifyStatus({ title: 'Thành công !', type: 'success' })
             setTimeout(() => {
               location.reload();
-            }, 1000)
+            }, 1500)
             return;
           }
           dispatch({ type: 'DELETE_DATA_REQUEST', payload: { id: dataModal?.id  } });
@@ -92,7 +103,7 @@ export const ModalAddNewData = () => {
                 placeholder="Tên sách"
                 key={form.key('bookTitle')}
                 {...form.getInputProps('bookTitle')}
-                value={dataModal?.bookTitle}
+                defaultValue={dataModal?.bookTitle}
             />
             <TextInput
                 withAsterisk
@@ -100,7 +111,7 @@ export const ModalAddNewData = () => {
                 placeholder="Tên người mượn"
                 key={form.key('borrower')}
                 {...form.getInputProps('borrower')}
-                value={dataModal?.borrower}
+                defaultValue={dataModal?.borrower}
             />
             <DateInput 
                 withAsterisk
@@ -124,7 +135,7 @@ export const ModalAddNewData = () => {
             />
             <Group justify="flex-end" mt="md">
                 <Button fullWidth type="submit" onClick={() => {
-                }}>{BTN_TITLE.ADD}</Button>
+                }}>{titleBtn}</Button>
             </Group>
         </form>
       </Modal>
