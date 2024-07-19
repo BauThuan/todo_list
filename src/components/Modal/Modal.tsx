@@ -128,7 +128,7 @@ export const ModalAddNewData = () => {
                 placeholder="Date input" 
                 key={form.key('borrowDate')}
                 {...form.getInputProps('borrowDate')}
-                // value={dataModal?.borrowDate}
+                valueFormat="DD-MM-YYYY"
             />
             <DateInput 
                 withAsterisk
@@ -138,6 +138,7 @@ export const ModalAddNewData = () => {
                 placeholder="Date input" 
                 key={form.key('returnDate')}
                 {...form.getInputProps('returnDate')}
+                valueFormat="DD-MM-YYYY"
                 // value={dataModal?.returnDate}
             />
             <Group justify="flex-end" mt="md">
